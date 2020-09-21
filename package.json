@@ -22,16 +22,20 @@
     "@mdx-js/loader": "^1.6.18",
     "@next/mdx": "^9.5.3",
     "@sitearcade/dotenv": "^0.1.0",
+    "@zeit/next-source-maps": "0.0.3",
+    "@zeit/next-workers": "1.0.0",
     "find-config": "^1.0.0",
     "gray-matter": "^4.0.2",
     "inspectpack": "^4.5.2",
     "js-yaml-loader": "^1.2.2",
+    "next-compose-plugins": "2.2.0",
     "next-transpile-modules": "^4.1.0",
     "ramda": "~0",
     "react-svg-loader": "^3.0.3",
     "webpack": "^4.44.2",
     "webpack-bundle-analyzer": "^3.9.0",
-    "webpack-bundle-size-analyzer": "^3.1.0"
+    "webpack-bundle-size-analyzer": "^3.1.0",
+    "worker-loader": "3.0.2"
   },
   "peerDependencies": {
     "next": "^9.5.3",
@@ -43,7 +47,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.11.6",
-    "@sitearcade/eslint-config": "0.2.0",
+    "@sitearcade/eslint-config": "0.2.1",
     "babel-eslint": "11.0.0-beta.2",
     "eslint": "7.9.0",
     "eslint-import-resolver-lerna": "1.1.0",

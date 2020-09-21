@@ -7,8 +7,11 @@ require('@sitearcade/dotenv/lerna');
 const path = require('path');
 
 const dotenv = require('@sitearcade/dotenv');
+const withSourceMaps = require('@zeit/next-source-maps');
+const withWorkers = require('@zeit/next-workers');
 const find = require('find-config');
 const {DuplicatesPlugin} = require('inspectpack/plugin');
+const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules');
 const R = require('ramda');
 const {DefinePlugin} = require('webpack');
@@ -40,7 +43,11 @@ const omitEnvVars = (env) => Object.keys(env).reduce((acc, k) => ({
 // export
 
 module.exports = function withArcade(nextCfg = {}) {
-  return withTM(['@arc'])({
+  return withPlugins([
+    withWorkers,
+    withSourceMaps,
+    withTM(['@arc']),
+  ], {
     ...nextCfg,
     reactStrictMode: true,
     trailingSlash: false,
@@ -51,6 +58,8 @@ module.exports = function withArcade(nextCfg = {}) {
     devIndicators: {
       autoPrerender: false,
     },
+
+    workerLoaderOptions: {inline: 'fallback'},
 
     webpack(cfg, opts) {
       const {defaultLoaders: {babel}} = opts;
