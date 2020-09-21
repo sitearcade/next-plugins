@@ -1,0 +1,70 @@
+{
+  "name": "@sitearcade/next-plugins",
+  "version": "0.0.0",
+  "description": "SiteArcade's next plugins.",
+  "license": "MIT",
+  "homepage": "https://sitearcade.com",
+  "repository": "github:sitearcade/next-plugins",
+  "bugs": "https://github.com/sitearcade/next-plugins/issues",
+  "author": {
+    "name": "Mike Stop Continues",
+    "email": "mike@sitearcade.com",
+    "url": "https://sitearcade.com"
+  },
+  "main": "index.js",
+  "scripts": {
+    "postpublish": "git push origin --all; git push origin --tags",
+    "postversion": "npm publish --access public",
+    "preversion": "npm test",
+    "test": "echo 'Seems fine...'"
+  },
+  "dependencies": {
+    "@mdx-js/loader": "^1.6.18",
+    "@next/mdx": "^9.5.3",
+    "@sitearcade/dotenv": "^0.1.0",
+    "find-config": "^1.0.0",
+    "gray-matter": "^4.0.2",
+    "inspectpack": "^4.5.2",
+    "js-yaml-loader": "^1.2.2",
+    "next-transpile-modules": "^4.1.0",
+    "ramda": "^0.27.1",
+    "react-svg-loader": "^3.0.3",
+    "webpack": "^4.44.2",
+    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-bundle-size-analyzer": "^3.1.0"
+  },
+  "peerDependencies": {
+    "next": "^9.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "optionalDependencies": {
+    "@mdx-js/react": "^1.6.18"
+  },
+  "devDependencies": {
+    "@babel/core": "7.11.6",
+    "@sitearcade/eslint-config": "0.2.0",
+    "babel-eslint": "11.0.0-beta.2",
+    "eslint": "7.9.0",
+    "eslint-import-resolver-lerna": "1.1.0",
+    "eslint-plugin-babel": "5.3.1",
+    "eslint-plugin-better-styled-components": "1.1.2",
+    "eslint-plugin-eslint-comments": "3.2.0",
+    "eslint-plugin-fp": "2.3.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jest": "24.0.2",
+    "eslint-plugin-jest-formatting": "2.0.0",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-lodash": "7.1.0",
+    "eslint-plugin-optimize-regex": "1.2.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-ramda": "2.5.1",
+    "eslint-plugin-react": "7.20.6",
+    "eslint-plugin-react-hooks": "4.1.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@sitearcade/eslint-config"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+# directories
+.*/
+node_modules
+
+# files
+.env*.local
+.ultra*
+
+# extensions
+*.log
+*.diff
+*.code-workspace
