@@ -10,3 +10,6 @@ node_modules
 *.log
 *.diff
 *.code-workspace
+
+# exclude
+!.github
