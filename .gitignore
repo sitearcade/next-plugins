@@ -1,6 +1,7 @@
 # directories
 .*/
 node_modules
+dist/
 
 # files
 .env*.local
@@ -13,3 +14,4 @@ node_modules
 
 # exclude
 !.github
+!.circleci
