@@ -79,7 +79,7 @@ module.exports = function withArcade(nextCfg = {}) {
 
       cfg = pathInsert(['module', 'rules', 1], {
         test: /\.svg$/,
-        use: [babel, {loader: 'react-svg-loader', options: {jsx: true, inlineStyles: false}}],
+        use: [babel, {loader: 'react-svg-loader', options: {jsx: true}}],
       }, cfg);
 
       // yaml
