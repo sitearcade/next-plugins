@@ -3,13 +3,13 @@
   "version": "0.1.2",
   "description": "SiteArcade's next plugins.",
   "license": "MIT",
-  "homepage": "https://sitearcade.com",
+  "homepage": "https://www.sitearcade.com",
   "repository": "github:sitearcade/next-plugins",
   "bugs": "https://github.com/sitearcade/next-plugins/issues",
   "author": {
     "name": "Mike Stop Continues",
     "email": "mike@sitearcade.com",
-    "url": "https://sitearcade.com"
+    "url": "https://www.sitearcade.com"
   },
   "main": "index.js",
   "scripts": {
