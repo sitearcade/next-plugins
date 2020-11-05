@@ -62,8 +62,6 @@ module.exports = function withArcade(nextCfg = {}) {
     workerLoaderOptions: {inline: 'fallback'},
 
     webpack(cfg, opts) {
-      const {defaultLoaders: {babel}} = opts;
-
       dotenv.config({
         envDir,
         buildTarget: opts.isServer ? 'server' : 'client',
@@ -74,13 +72,6 @@ module.exports = function withArcade(nextCfg = {}) {
       // env
 
       cfg = pathAppend(['plugins'], new DefinePlugin(dotenv.config()), cfg);
-
-      // svg
-
-      cfg = pathInsert(['module', 'rules', 1], {
-        test: /\.svg$/,
-        use: [babel, {loader: 'react-svg-loader', options: {jsx: true}}],
-      }, cfg);
 
       // yaml
 
