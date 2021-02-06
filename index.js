@@ -5,7 +5,6 @@ require('@sitearcade/dotenv');
 // import
 
 const withSourceMaps = require('@zeit/next-source-maps');
-const withWorkers = require('@zeit/next-workers');
 const {DuplicatesPlugin} = require('inspectpack/plugin');
 const withPlugins = require('next-compose-plugins');
 const R = require('ramda');
@@ -35,10 +34,7 @@ const omitEnvVars = (env) => Object.keys(env).reduce((acc, k) => ({
 // plugins
 
 function withArcade(nextCfg = {}) {
-  return withPlugins([
-    withWorkers,
-    withSourceMaps,
-  ], {
+  return withPlugins([withSourceMaps], {
     ...nextCfg,
     reactStrictMode: true,
     trailingSlash: false,
@@ -104,6 +100,23 @@ function withArcade(nextCfg = {}) {
           cfg,
         );
       }
+
+      // workers
+
+      cfg = R.assocPath(['output', 'globalObject'], 'self', cfg);
+
+      cfg = pathAppend(
+        ['module', 'rules'],
+        {
+          test: /\.worker\.(js|ts)$/,
+          loader: 'worker-loader',
+          options: nextCfg.workerLoaderOptions || {
+            name: 'static/[hash].worker.js',
+            publicPath: '/_next/',
+          },
+        },
+        cfg,
+      );
 
       return R.is(Function, nextCfg.webpack) ?
         nextCfg.webpack(cfg, opts) :
