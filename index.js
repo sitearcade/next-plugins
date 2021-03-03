@@ -1,130 +1,105 @@
 // env
 
-require('@sitearcade/dotenv');
-
-// import
-
-const withSourceMaps = require('@zeit/next-source-maps');
-const {DuplicatesPlugin} = require('inspectpack/plugin');
-const withPlugins = require('next-compose-plugins');
-const R = require('ramda');
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
-const {WebpackBundleSizeAnalyzerPlugin} = require('webpack-bundle-size-analyzer');
+require('@sitearcade/dotenv/config');
 
 // vars
 
 const omitEnvRx = /^(?:__|NODE_)/;
 
-// fns
+const omitEnvVars = (env) => Object.keys(env).reduce((acc, k) => {
+  if (!omitEnvRx.test(k)) {
+    acc[k] = env[k];
+  }
 
-const pathAppend = (loc, bit, obj) =>
-  R.over(R.lensPath(loc), R.append(bit), obj);
+  return acc;
+}, {});
 
-const pathInsert = (loc, bit, obj) => R.over(
-  R.lensPath(R.init(loc)),
-  R.insert(R.last(loc), bit),
-  obj,
-);
+// export
 
-const omitEnvVars = (env) => Object.keys(env).reduce((acc, k) => ({
-  ...acc,
-  ...(omitEnvRx.test(k) ? {} : {[k]: env[k]}),
-}), {});
-
-// plugins
-
-function withArcade(nextCfg = {}) {
-  return withPlugins([withSourceMaps], {
-    ...nextCfg,
+module.exports = function withArcade(nextCfg = {}) {
+  return {
+    devIndicators: {autoPrerender: false},
+    pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+    poweredByHeader: false,
+    productionBrowserSourceMaps: true,
     reactStrictMode: true,
     trailingSlash: false,
-    poweredByHeader: false,
-    pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+    workerLoaderOptions: {inline: 'fallback'},
+    ...nextCfg,
+
     env: {...omitEnvVars(process.env), ...(nextCfg.env || {})},
 
-    devIndicators: {
-      autoPrerender: false,
-    },
-
-    workerLoaderOptions: {inline: 'fallback'},
-
     webpack(cfg, opts) {
-      cfg = R.assocPath(['node', 'fs'], 'empty', cfg);
+      cfg.node = {fs: 'empty'};
 
       // yaml
 
-      cfg = pathInsert(['module', 'rules', 2], {
+      cfg.module.rules.push({
         test: /\.ya?ml$/,
         use: {loader: 'js-yaml-loader', options: {safe: false}},
-      }, cfg);
+      });
 
       // analyze
 
       if (nextCfg.analyze || process.env.NEXT_ANALYZE) {
-        cfg = pathAppend(
-          ['plugins'],
+        const {DuplicatesPlugin} = require('inspectpack/plugin');
+        const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+
+        cfg.plugins.push(
           new DuplicatesPlugin({verbose: true}),
-          cfg,
-        );
-
-        cfg = pathAppend(
-          ['plugins'],
-          new WebpackBundleSizeAnalyzerPlugin('stats.txt'),
-          cfg,
-        );
-
-        cfg = pathAppend(
-          ['plugins'],
           new BundleAnalyzerPlugin({
             analyzerMode: 'static',
             openAnalyzer: false,
-            generateStatsFile: true,
             logLevel: 'warn',
+
+            defaultSizes: 'gzip',
+            reportFilename: opts.isServer ?
+              '../.perf/server.html' :
+              './.perf/client.html',
+
+            generateStatsFile: true,
+            statsOptions: {source: true},
+            statsFilename: opts.isServer ?
+              '../.perf/server-stats.json' :
+              './.perf/client-stats.json',
           }),
-          cfg,
         );
       }
 
       // profile
 
       if (nextCfg.profile || process.env.NEXT_PROFILE) {
-        cfg = R.assocPath(
-          ['resolve', 'alias', 'react-dom$'],
-          'react-dom/profiling',
-          cfg,
-        );
+        cfg.resolve.alias['react-dom'] = 'react-dom/profiling';
+        cfg.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
 
-        cfg = R.assocPath(
-          ['resolve', 'alias', 'scheduler/tracing'],
-          'scheduler/tracing-profiling',
-          cfg,
-        );
+        const terser = cfg.optimization.minimizer
+          .find((plug) => plug?.options?.terserOptions);
+
+        if (terser) {
+          terser.options.terserOptions = {
+            ...terser.options.terserOptions,
+            keep_classnames: true,
+            keep_fnames: true,
+          };
+        }
       }
 
       // workers
 
-      cfg = R.assocPath(['output', 'globalObject'], 'self', cfg);
-
-      cfg = pathAppend(
-        ['module', 'rules'],
-        {
-          test: /\.worker\.(js|ts)$/,
-          loader: 'worker-loader',
-          options: nextCfg.workerLoaderOptions || {
-            name: 'static/[hash].worker.js',
-            publicPath: '/_next/',
-          },
+      cfg.output.globalObject = 'self';
+      cfg.module.rules.push({
+        test: /\.worker\.(js|ts)$/,
+        loader: 'worker-loader',
+        options: nextCfg.workerLoaderOptions || {
+          name: 'static/[hash].worker.js',
+          publicPath: '/_next/',
         },
-        cfg,
-      );
+      });
 
-      return R.is(Function, nextCfg.webpack) ?
-        nextCfg.webpack(cfg, opts) :
-        cfg;
+      // fin
+
+      return typeof nextCfg.webpack === 'function' ?
+        nextCfg.webpack(cfg, opts) : cfg;
     },
-  });
-}
-
-// export
-
-module.exports = {withArcade};
+  };
+};
