@@ -25,12 +25,20 @@ module.exports = function withArcade(nextCfg = {}) {
     reactStrictMode: true,
     trailingSlash: false,
     workerLoaderOptions: {inline: 'fallback'},
+    future: {
+      webpack5: true,
+      strictPostcssConfiguration: true,
+    },
+
     ...nextCfg,
 
     env: {...omitEnvVars(process.env), ...(nextCfg.env || {})},
 
     webpack(cfg, opts) {
-      cfg.node = {fs: 'empty'};
+      cfg.resolve.fallback = {
+        ...cfg.resolve.fallback || {},
+        fs: false,
+      };
 
       // yaml
 
