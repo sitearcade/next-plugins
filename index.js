@@ -47,6 +47,13 @@ module.exports = function withArcade(nextCfg = {}) {
         use: {loader: 'js-yaml-loader', options: {safe: false}},
       });
 
+      // svg
+
+      cfg.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      });
+
       // analyze
 
       if (nextCfg.analyze || process.env.NEXT_ANALYZE) {

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@sitearcade/dotenv": "^1.0.3",
+    "@svgr/webpack": "5.5.0",
     "inspectpack": "^4.7.1",
     "js-yaml-loader": "^1.2.2",
     "webpack-bundle-analyzer": "^4.4.0",
