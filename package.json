@@ -20,11 +20,11 @@
     "test": "next build"
   },
   "dependencies": {
-    "@sitearcade/dotenv": "^1.0.3",
+    "@sitearcade/dotenv": "^1.1.3",
     "@svgr/webpack": "5.5.0",
     "inspectpack": "^4.7.1",
     "js-yaml-loader": "^1.2.2",
-    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack-bundle-analyzer": "^4.4.2",
     "worker-loader": "^3.0.8"
   },
   "peerDependencies": {
@@ -33,11 +33,11 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@sitearcade/eslint-config": "1.4.1",
-    "next": "10.0.7",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "webpack": "5.28.0"
+    "@sitearcade/eslint-config": "^1.6.3",
+    "next": "^10.2.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.38.1"
   },
   "eslintConfig": {
     "extends": [
