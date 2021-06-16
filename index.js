@@ -25,8 +25,8 @@ module.exports = function withArcade(nextCfg = {}) {
     reactStrictMode: true,
     trailingSlash: false,
     workerLoaderOptions: {inline: 'fallback'},
+    webpack5: true,
     future: {
-      webpack5: true,
       excludeDefaultMomentLocales: true,
       strictPostcssConfiguration: true,
     },
