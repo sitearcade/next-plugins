@@ -50,7 +50,7 @@ module.exports = function withArcade(nextCfg = {}) {
 
       // svg
 
-      cfg.module.rules.push({
+      cfg.module.rules.unshift({
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       });
