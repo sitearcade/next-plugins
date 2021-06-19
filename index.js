@@ -41,6 +41,13 @@ module.exports = function withArcade(nextCfg = {}) {
         fs: false,
       };
 
+      // svg
+
+      cfg.module.rules.splice(2, 0, {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      });
+
       // yaml
 
       cfg.module.rules.push({
@@ -48,12 +55,7 @@ module.exports = function withArcade(nextCfg = {}) {
         use: {loader: 'js-yaml-loader', options: {safe: false}},
       });
 
-      // svg
-
-      cfg.module.rules.unshift({
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      });
+      console.log(cfg.module.rules.slice());
 
       // analyze
 
