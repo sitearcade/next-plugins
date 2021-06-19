@@ -33,12 +33,12 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@sitearcade/eslint-config": "^1.7.0",
+    "@sitearcade/eslint-config": "^1.7.1",
     "@types/react": "17.0.11",
     "next": "^11.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "webpack": "^5.39.0"
+    "webpack": "^5.39.1"
   },
   "eslintConfig": {
     "extends": [

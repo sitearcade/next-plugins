@@ -25,7 +25,6 @@ module.exports = function withArcade(nextCfg = {}) {
     reactStrictMode: true,
     trailingSlash: false,
     workerLoaderOptions: {inline: 'fallback'},
-    webpack5: true,
     future: {
       excludeDefaultMomentLocales: true,
       strictPostcssConfiguration: true,
@@ -43,15 +42,10 @@ module.exports = function withArcade(nextCfg = {}) {
 
       // svg
 
-      cfg.module.rules[2] = {
-        oneOf: [
-          {
-            test: /\.svg$/,
-            use: ['@svgr/webpack'],
-          },
-          cfg.module.rules[2],
-        ],
-      };
+      cfg.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      });
 
       // yaml
 
