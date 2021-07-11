@@ -49,8 +49,6 @@ module.exports = function withArcade(nextCfg = {}) {
           options: {
             ref: true,
             titleProp: true,
-            ext: 'tsx',
-            typescript: true,
           },
         }],
       });
