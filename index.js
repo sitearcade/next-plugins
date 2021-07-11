@@ -48,10 +48,7 @@ module.exports = function withArcade(nextCfg = {}) {
           loader: '@svgr/webpack',
           options: {
             ref: true,
-            expandProps: 'end',
             titleProp: true,
-            typescript: true,
-            prettier: true,
             svgo: true,
             svgoConfig: {
               multipass: true,
