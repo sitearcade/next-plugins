@@ -44,7 +44,15 @@ module.exports = function withArcade(nextCfg = {}) {
 
       cfg.module.rules.push({
         test: /\.svg$/,
-        use: ['@svgr/webpack'],
+        use: [{
+          loader: '@svgr/webpack',
+          options: {
+            ref: true,
+            titleProp: true,
+            ext: 'tsx',
+            typescript: true,
+          },
+        }],
       });
 
       // yaml
