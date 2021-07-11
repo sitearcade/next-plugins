@@ -49,17 +49,7 @@ module.exports = function withArcade(nextCfg = {}) {
           options: {
             ref: true,
             titleProp: true,
-            svgo: true,
-            svgoConfig: {
-              multipass: true,
-              plugins: [{
-                name: 'prefixIds',
-                params: {
-                  prefixIds: false,
-                  prefixClassNames: false,
-                },
-              }],
-            },
+            svgo: false,
           },
         }],
       });
