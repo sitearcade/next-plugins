@@ -24,6 +24,7 @@
     "@svgr/webpack": "5.5.0",
     "inspectpack": "^4.7.1",
     "js-yaml-loader": "^1.2.2",
+    "next-transpile-modules": "^8.0.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "worker-loader": "^3.0.8"
   },
@@ -33,7 +34,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@sitearcade/eslint-config": "^1.8.0",
+    "@sitearcade/eslint-config": "^1.8.1",
     "@types/react": "17.0.14",
     "next": "^11.0.1",
     "react": "^17.0.2",
