@@ -18,7 +18,7 @@ const omitEnvVars = (env) => Object.keys(env).reduce((acc, k) => {
 
 module.exports = function withArcade(nextCfg = {}) {
   return {
-    devIndicators: {autoPrerender: false},
+    devIndicators: {autoPrerender: false, ...nextCfg.devIndicators},
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
     poweredByHeader: false,
     productionBrowserSourceMaps: true,
@@ -28,6 +28,7 @@ module.exports = function withArcade(nextCfg = {}) {
     future: {
       excludeDefaultMomentLocales: true,
       strictPostcssConfiguration: true,
+      ...nextCfg.future,
     },
 
     ...nextCfg,
